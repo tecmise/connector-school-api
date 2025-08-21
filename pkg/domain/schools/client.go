@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/tecmise/connector-school-api/pkg/adapters/outbound/lambda"
+	"github.com/tecmise/connector-school-api/pkg/adapters/outbound/rest"
 	"github.com/tecmise/connector-school-api/pkg/ports/output/connector"
 )
 
@@ -25,14 +26,9 @@ func Rest(host string) Client {
 	}
 }
 
-type client struct {
-	identifier string
-	responses  connector.Call[[]Response]
-}
-
-func NewClient(identifier string) Client {
+func Lambda(identifier string) Client {
 	return &client{
-		host:   functionName,
+		host:   identifier,
 		mapper: lambda.NewConnector[Response](),
 	}
 }
