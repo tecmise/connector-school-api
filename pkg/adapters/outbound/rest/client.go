@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/sirupsen/logrus"
-	"github.com/tecmise/school-api-connector/pkg/ports/output/connector"
+	"github.com/tecmise/connector-school-api/pkg/ports/output/connector"
 	"github.com/valyala/fasthttp"
 	"strings"
 )

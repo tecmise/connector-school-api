@@ -1,7 +1,7 @@
 package school_user_profile
 
 import (
-	"github.com/tecmise/school-api-connector/pkg/domain/shared"
+	"github.com/tecmise/connector-school-api/pkg/domain/shared"
 )
 
 type SchoolTenantResponse struct {

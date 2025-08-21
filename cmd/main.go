@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"github.com/sirupsen/logrus"
 <<<<<<< HEAD
-	"github.com/tecmise/school-api-connector/pkg/domain/cluster_user_profile"
+	"github.com/tecmise/connector-school-api/pkg/domain/cluster_user_profile"
 =======
-	"github.com/tecmise/school-api-connector/pkg/domain/permission_user_cluster"
+	"github.com/tecmise/connector-school-api/pkg/domain/permission_user_cluster"
 	"os"
 	"path"
 	"path/filepath"

@@ -3,7 +3,7 @@ package connector
 import (
 	"fmt"
 	"github.com/gofrs/uuid"
-	"github.com/tecmise/school-api-connector/pkg/ports/output/constant"
+	"github.com/tecmise/connector-school-api/pkg/ports/output/constant"
 )
 
 type Parameter struct {

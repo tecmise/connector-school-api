@@ -9,9 +9,9 @@ import (
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/lambda"
 	"github.com/sirupsen/logrus"
-	"github.com/tecmise/school-api-connector/pkg/ports/output/connector"
-	"github.com/tecmise/school-api-connector/pkg/ports/output/constant"
-	lambda2 "github.com/tecmise/school-api-connector/pkg/ports/output/lambda"
+	"github.com/tecmise/connector-school-api/pkg/ports/output/connector"
+	"github.com/tecmise/connector-school-api/pkg/ports/output/constant"
+	lambda2 "github.com/tecmise/connector-school-api/pkg/ports/output/lambda"
 	"log"
 )
 

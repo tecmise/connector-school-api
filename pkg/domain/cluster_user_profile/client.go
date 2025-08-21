@@ -3,10 +3,10 @@ package cluster_user_profile
 import (
 	"context"
 	"fmt"
-	"github.com/tecmise/school-api-connector/pkg/adapters/outbound/lambda"
-	"github.com/tecmise/school-api-connector/pkg/adapters/outbound/rest"
-	"github.com/tecmise/school-api-connector/pkg/ports/output/connector"
-	"github.com/tecmise/school-api-connector/pkg/ports/output/constant"
+	"github.com/tecmise/connector-school-api/pkg/adapters/outbound/lambda"
+	"github.com/tecmise/connector-school-api/pkg/adapters/outbound/rest"
+	"github.com/tecmise/connector-school-api/pkg/ports/output/connector"
+	"github.com/tecmise/connector-school-api/pkg/ports/output/constant"
 )
 
 type (
