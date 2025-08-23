@@ -4,10 +4,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"strings"
+
 	"github.com/sirupsen/logrus"
 	"github.com/tecmise/connector-school-api/pkg/ports/output/connector"
 	"github.com/valyala/fasthttp"
-	"strings"
 )
 
 type (
@@ -29,6 +30,10 @@ func (c Connector[T]) Find(parameter connector.Parameter, response *T) error {
 }
 
 func (c Connector[T]) List(parameter connector.Parameter, response *[]T) error {
+	return call(parameter, response)
+}
+
+func (c Connector[T]) Page(parameter connector.Parameter, response *connector.ListResponse[T]) error {
 	return call(parameter, response)
 }
 

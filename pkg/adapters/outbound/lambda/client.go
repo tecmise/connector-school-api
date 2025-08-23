@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"log"
+
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/lambda"
@@ -12,7 +14,6 @@ import (
 	"github.com/tecmise/connector-school-api/pkg/ports/output/connector"
 	"github.com/tecmise/connector-school-api/pkg/ports/output/constant"
 	lambda2 "github.com/tecmise/connector-school-api/pkg/ports/output/lambda"
-	"log"
 )
 
 type (
@@ -39,6 +40,10 @@ func (c Connector[T]) Find(parameter connector.Parameter, response *T) error {
 }
 
 func (c Connector[T]) List(parameter connector.Parameter, response *[]T) error {
+	return call(parameter, response)
+}
+
+func (c Connector[T]) Page(parameter connector.Parameter, response *connector.ListResponse[T]) error {
 	return call(parameter, response)
 }
 
