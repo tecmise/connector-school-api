@@ -11,7 +11,7 @@ import (
 
 type (
 	Client interface {
-		FindUserInfo(ctx context.Context, userID uint) (Response, error)
+		FindUserInfo(ctx context.Context, userID string) (Response, error)
 	}
 
 	client struct {
@@ -34,11 +34,11 @@ func Lambda(identifier string) Client {
 	}
 }
 
-func (c client) FindUserInfo(_ context.Context, userID uint) (Response, error) {
+func (c client) FindUserInfo(_ context.Context, userID string) (Response, error) {
 	var user Response
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
-		WithResource(fmt.Sprintf("api/users/%d", userID)).
+		WithResource(fmt.Sprintf("api/users/%s", userID)).
 		WithMethod("GET").
 		Build()
 	return user, c.mapper.Find(parameter, &user)
