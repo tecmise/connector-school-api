@@ -13,6 +13,9 @@ type (
 	Client interface {
 		FindByClusterId(ctx context.Context, clusterId int64) ([]int64, error)
 		PaginateSchools(ctx context.Context, search string, page int, limit int, sort string) (connector.ListResponse[Response], error)
+		CreateSchool(ctx context.Context, request any) (Response, error)
+		UpdateSchool(ctx context.Context, request Response) (Response, error)
+		InativeSchool(ctx context.Context, schoolID uint) (Response, error)
 	}
 
 	client struct {
@@ -53,4 +56,36 @@ func (c client) PaginateSchools(_ context.Context, search string, page int, limi
 		WithMethod("GET").
 		Build()
 	return list, c.mapper.Page(parameter, &list)
+}
+
+func (c client) CreateSchool(_ context.Context, request any) (Response, error) {
+	var school Response
+	parameter := connector.NewParameterBuilder().
+		WithHost(c.host).
+		WithResource("api/schools").
+		WithBody(request).
+		WithMethod("POST").
+		Build()
+	return school, c.mapper.Create(parameter, &school)
+}
+
+func (c client) UpdateSchool(_ context.Context, request Response) (Response, error) {
+	var school Response
+	parameter := connector.NewParameterBuilder().
+		WithHost(c.host).
+		WithResource("api/schools").
+		WithBody(request).
+		WithMethod("PUT").
+		Build()
+	return school, c.mapper.Update(parameter, &school)
+}
+
+func (c client) InativeSchool(_ context.Context, schoolID uint) (Response, error) {
+	var school Response
+	parameter := connector.NewParameterBuilder().
+		WithHost(c.host).
+		WithResource(fmt.Sprintf("api/schools/%d", schoolID)).
+		WithMethod("PUT").
+		Build()
+	return school, c.mapper.Inative(parameter, &school)
 }
