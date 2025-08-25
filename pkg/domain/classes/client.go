@@ -13,7 +13,7 @@ type (
 	Client interface {
 		PaginateClasses(ctx context.Context, search string, page int, limit int, sort string) (connector.ListResponse[Response], error)
 		CreateClass(ctx context.Context, request any) (Response, error)
-		UpdateClass(ctx context.Context, request Response) (Response, error)
+		UpdateClass(ctx context.Context, request any) (Response, error)
 		InativeClass(ctx context.Context, classID uint) (Response, error)
 	}
 
@@ -58,7 +58,7 @@ func (c client) CreateClass(_ context.Context, request any) (Response, error) {
 	return classes, c.mapper.Create(parameter, &classes)
 }
 
-func (c client) UpdateClass(_ context.Context, request Response) (Response, error) {
+func (c client) UpdateClass(_ context.Context, request any) (Response, error) {
 	var classes Response
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).

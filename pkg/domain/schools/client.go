@@ -14,7 +14,7 @@ type (
 		FindByClusterId(ctx context.Context, clusterId int64) ([]int64, error)
 		PaginateSchools(ctx context.Context, search string, page int, limit int, sort string) (connector.ListResponse[Response], error)
 		CreateSchool(ctx context.Context, request any) (Response, error)
-		UpdateSchool(ctx context.Context, request Response) (Response, error)
+		UpdateSchool(ctx context.Context, request any) (Response, error)
 		InativeSchool(ctx context.Context, schoolID uint) (Response, error)
 	}
 
@@ -69,7 +69,7 @@ func (c client) CreateSchool(_ context.Context, request any) (Response, error) {
 	return school, c.mapper.Create(parameter, &school)
 }
 
-func (c client) UpdateSchool(_ context.Context, request Response) (Response, error) {
+func (c client) UpdateSchool(_ context.Context, request any) (Response, error) {
 	var school Response
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
@@ -85,7 +85,7 @@ func (c client) InativeSchool(_ context.Context, schoolID uint) (Response, error
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
 		WithResource(fmt.Sprintf("api/schools/%d", schoolID)).
-		WithMethod("PUT").
+		WithMethod("DELETE").
 		Build()
 	return school, c.mapper.Inative(parameter, &school)
 }
