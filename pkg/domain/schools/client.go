@@ -15,7 +15,7 @@ type (
 		PaginateSchools(ctx context.Context, search string, page int, limit int, sort string) (connector.ListResponse[Response], error)
 		CreateSchool(ctx context.Context, request any) (Response, error)
 		UpdateSchool(ctx context.Context, request any) (Response, error)
-		InativeSchool(ctx context.Context, schoolID uint) (Response, error)
+		InativeSchool(ctx context.Context, schoolID string) (Response, error)
 	}
 
 	client struct {
@@ -80,11 +80,11 @@ func (c client) UpdateSchool(_ context.Context, request any) (Response, error) {
 	return school, c.mapper.Update(parameter, &school)
 }
 
-func (c client) InativeSchool(_ context.Context, schoolID uint) (Response, error) {
+func (c client) InativeSchool(_ context.Context, schoolID string) (Response, error) {
 	var school Response
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
-		WithResource(fmt.Sprintf("api/schools/%d", schoolID)).
+		WithResource(fmt.Sprintf("api/schools/%s", schoolID)).
 		WithMethod("DELETE").
 		Build()
 	return school, c.mapper.Inative(parameter, &school)

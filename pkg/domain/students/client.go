@@ -14,7 +14,7 @@ type (
 		PaginateStudents(ctx context.Context, search string, page int, limit int, sort string) (connector.ListResponse[Response], error)
 		CreateStudent(ctx context.Context, request any) (Response, error)
 		UpdateStudent(ctx context.Context, request any) (Response, error)
-		InativeStudent(ctx context.Context, studentID uint) (Response, error)
+		InativeStudent(ctx context.Context, studentID string) (Response, error)
 	}
 
 	client struct {
@@ -69,11 +69,11 @@ func (c client) UpdateStudent(_ context.Context, request any) (Response, error) 
 	return students, c.mapper.Update(parameter, &students)
 }
 
-func (c client) InativeStudent(_ context.Context, studentID uint) (Response, error) {
+func (c client) InativeStudent(_ context.Context, studentID string) (Response, error) {
 	var students Response
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
-		WithResource(fmt.Sprintf("api/students/%d", studentID)).
+		WithResource(fmt.Sprintf("api/students/%s", studentID)).
 		WithMethod("DELETE").
 		Build()
 	return students, c.mapper.Inative(parameter, &students)

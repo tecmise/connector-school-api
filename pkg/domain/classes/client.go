@@ -14,7 +14,7 @@ type (
 		PaginateClasses(ctx context.Context, search string, page int, limit int, sort string) (connector.ListResponse[Response], error)
 		CreateClass(ctx context.Context, request any) (Response, error)
 		UpdateClass(ctx context.Context, request any) (Response, error)
-		InativeClass(ctx context.Context, classID uint) (Response, error)
+		InativeClass(ctx context.Context, classID string) (Response, error)
 	}
 
 	client struct {
@@ -69,11 +69,11 @@ func (c client) UpdateClass(_ context.Context, request any) (Response, error) {
 	return classes, c.mapper.Update(parameter, &classes)
 }
 
-func (c client) InativeClass(_ context.Context, classID uint) (Response, error) {
+func (c client) InativeClass(_ context.Context, classID string) (Response, error) {
 	var classes Response
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
-		WithResource(fmt.Sprintf("api/classes/%d", classID)).
+		WithResource(fmt.Sprintf("api/classes/%s", classID)).
 		WithMethod("DELETE").
 		Build()
 	return classes, c.mapper.Inative(parameter, &classes)
