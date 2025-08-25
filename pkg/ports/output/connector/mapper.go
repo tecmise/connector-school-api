@@ -7,5 +7,8 @@ type (
 		Page(parameter Parameter, response *ListResponse[T]) error
 		Ids(parameter Parameter, response *[]int64) error
 		Strings(parameter Parameter, response *[]string) error
+		Create(parameter Parameter, response *T) error
+		Update(parameter Parameter, response *T) error
+		Inative(parameter Parameter, response *T) error
 	}
 )
