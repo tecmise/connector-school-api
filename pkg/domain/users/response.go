@@ -1,4 +1,4 @@
-package schools
+package users
 
 type Response struct {
 	ID       string  `json:"id"`

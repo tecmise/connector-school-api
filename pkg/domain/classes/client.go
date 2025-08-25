@@ -1,4 +1,4 @@
-package schools
+package classes
 
 import (
 	"context"

@@ -1,4 +1,4 @@
-package schools
+package users
 
 import (
 	"context"
@@ -11,7 +11,7 @@ import (
 
 type (
 	Client interface {
-		Find(ctx context.Context, userID uint) (Response, error)
+		FindUserInfo(ctx context.Context, userID uint) (Response, error)
 	}
 
 	client struct {
@@ -34,7 +34,7 @@ func Lambda(identifier string) Client {
 	}
 }
 
-func (c client) Find(_ context.Context, userID uint) (Response, error) {
+func (c client) FindUserInfo(_ context.Context, userID uint) (Response, error) {
 	var user Response
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).

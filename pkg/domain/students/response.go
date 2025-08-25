@@ -1,4 +1,4 @@
-package schools
+package students
 
 import "github.com/tecmise/connector-school-api/pkg/domain/shared"
 
