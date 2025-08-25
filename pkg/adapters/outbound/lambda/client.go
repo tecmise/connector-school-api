@@ -55,6 +55,18 @@ func (c Connector[T]) Strings(parameter connector.Parameter, response *[]string)
 	return call(parameter, response)
 }
 
+func (c Connector[T]) Create(parameter connector.Parameter, response *T) error {
+	return call(parameter, response)
+}
+
+func (c Connector[T]) Update(parameter connector.Parameter, response *T) error {
+	return call(parameter, response)
+}
+
+func (c Connector[T]) Inative(parameter connector.Parameter, response *T) error {
+	return call(parameter, response)
+}
+
 func call(parameter connector.Parameter, response interface{}) error {
 	client, ok := LambdaClients[parameter.Region]
 	if !ok {

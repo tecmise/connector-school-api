@@ -41,6 +41,18 @@ func (c Connector[T]) Ids(parameter connector.Parameter, response *[]int64) erro
 	return call(parameter, response)
 }
 
+func (c Connector[T]) Create(parameter connector.Parameter, response *T) error {
+	return call(parameter, response)
+}
+
+func (c Connector[T]) Update(parameter connector.Parameter, response *T) error {
+	return call(parameter, response)
+}
+
+func (c Connector[T]) Inative(parameter connector.Parameter, response *T) error {
+	return call(parameter, response)
+}
+
 func call(parameter connector.Parameter, response interface{}) error {
 	logrus.Debugf("Calling REST API\n")
 	logrus.Debugf("Resource: %s\n", parameter.Resource)
