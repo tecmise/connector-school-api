@@ -1,9 +1,12 @@
 package rest
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
+	"mime/multipart"
 	"strings"
 
 	"github.com/sirupsen/logrus"
@@ -72,9 +75,12 @@ func call(parameter connector.Parameter, response interface{}) error {
 	req.Header.SetMethod(method)
 	req.Header.Set("Accept", "application/json")
 
+	isFormData := false
+
 	if v, ok := parameter.Headers["Content-Type"]; ok {
 		if strings.HasPrefix(v, "multipart/form-data") {
 			req.Header.Set("Content-Type", "multipart/form-data")
+			isFormData = true
 		} else {
 			req.Header.Set("Content-Type", "application/json")
 		}
@@ -88,12 +94,55 @@ func call(parameter connector.Parameter, response interface{}) error {
 	logHeaders(&req.Header)
 
 	if method == "POST" || method == "PUT" || method == "PATCH" || method == "DELETE" {
-		requestBody, err := json.Marshal(parameter.Body)
-		if err != nil {
-			return fmt.Errorf("error marshaling request body: %w", err)
+
+		if isFormData {
+			var b bytes.Buffer
+			writer := multipart.NewWriter(&b)
+
+			if form, ok := parameter.Body.(*multipart.Form); ok {
+				for key, vals := range form.Value {
+					for _, val := range vals {
+						if err := writer.WriteField(key, val); err != nil {
+							return fmt.Errorf("error writing form field %s: %w", key, err)
+						}
+					}
+				}
+
+				// Adiciona arquivos se houver
+				for key, files := range form.File {
+					for _, fh := range files {
+						fileWriter, err := writer.CreateFormFile(key, fh.Filename)
+						if err != nil {
+							return fmt.Errorf("error creating form file %s: %w", key, err)
+						}
+
+						// abre o arquivo
+						file, err := fh.Open()
+						if err != nil {
+							return fmt.Errorf("error opening file %s: %w", key, err)
+						}
+						defer file.Close()
+
+						if _, err := io.Copy(fileWriter, file); err != nil {
+							return fmt.Errorf("error copying file %s: %w", key, err)
+						}
+					}
+				}
+			}
+
+			writer.Close()
+			req.SetBody(b.Bytes())
+			req.Header.Set("Content-Type", writer.FormDataContentType())
+		} else {
+			requestBody, err := json.Marshal(parameter.Body)
+			if err != nil {
+				return fmt.Errorf("error marshaling request body: %w", err)
+			}
+			req.SetBody(requestBody)
 		}
-		req.SetBody(requestBody)
+
 	}
+
 	resp := fasthttp.AcquireResponse()
 	defer fasthttp.ReleaseResponse(resp)
 	err := fasthttp.Do(req, resp)
