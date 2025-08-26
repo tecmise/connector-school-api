@@ -12,6 +12,7 @@ import (
 type (
 	Client interface {
 		PaginateClasses(ctx context.Context, search string, page int, limit int, sort string) (connector.ListResponse[Response], error)
+		FindBySchoolID(ctx context.Context, schoolID string) ([]Response, error)
 		CreateClass(ctx context.Context, request any) (Response, error)
 		UpdateClass(ctx context.Context, request any) (Response, error)
 		InativeClass(ctx context.Context, classID string) (Response, error)
@@ -45,6 +46,16 @@ func (c client) PaginateClasses(_ context.Context, search string, page int, limi
 		WithMethod("GET").
 		Build()
 	return classes, c.mapper.Page(parameter, &classes)
+}
+
+func (c client) FindBySchoolID(_ context.Context, schoolID string) ([]Response, error) {
+	var classes []Response
+	parameter := connector.NewParameterBuilder().
+		WithHost(c.host).
+		WithResource(fmt.Sprintf("api/classes/select/school/%s", schoolID)).
+		WithMethod("GET").
+		Build()
+	return classes, c.mapper.List(parameter, &classes)
 }
 
 func (c client) CreateClass(_ context.Context, request any) (Response, error) {
