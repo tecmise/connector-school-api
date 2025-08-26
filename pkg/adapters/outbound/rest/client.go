@@ -71,7 +71,17 @@ func call(parameter connector.Parameter, response interface{}) error {
 	req.SetRequestURI(uri)
 	req.Header.SetMethod(method)
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("Content-Type", "application/json")
+
+	if v, ok := parameter.Headers["Content-Type"]; ok {
+		if strings.HasPrefix(v, "multipart/form-data") {
+			req.Header.Set("Content-Type", "multipart/form-data")
+		} else {
+			req.Header.Set("Content-Type", "application/json")
+		}
+	} else {
+		req.Header.Set("Content-Type", "application/json") // default
+	}
+
 	req.Header.Set("X-authenticated-user", parameter.UserID.String())
 	req.Header.Set("X-user-pool", parameter.UserPoolID)
 
