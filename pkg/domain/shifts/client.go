@@ -1,4 +1,4 @@
-package schools
+package shifts
 
 import (
 	"context"

@@ -1,4 +1,4 @@
-package schools
+package levels
 
 type Response struct {
 	ID       uint   `json:"id"`

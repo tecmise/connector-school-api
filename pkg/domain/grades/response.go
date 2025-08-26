@@ -1,4 +1,4 @@
-package schools
+package grades
 
 type Response struct {
 	ID       uint   `json:"id"`

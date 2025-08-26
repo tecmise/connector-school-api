@@ -1,4 +1,4 @@
-package schools
+package shifts
 
 type Response struct {
 	ID       uint   `json:"id"`
