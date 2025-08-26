@@ -54,6 +54,7 @@ func (c client) CreateStudent(_ context.Context, request any) (Response, error) 
 		WithResource("api/students").
 		WithBody(request).
 		WithMethod("POST").
+		WithHeader("Content-Type", "multipart/form-data").
 		Build()
 	return students, c.mapper.Create(parameter, &students)
 }
@@ -65,6 +66,7 @@ func (c client) UpdateStudent(_ context.Context, request any) (Response, error) 
 		WithResource("api/students").
 		WithBody(request).
 		WithMethod("PUT").
+		WithHeader("Content-Type", "multipart/form-data").
 		Build()
 	return students, c.mapper.Update(parameter, &students)
 }

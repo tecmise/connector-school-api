@@ -2,6 +2,7 @@ package connector
 
 import (
 	"fmt"
+
 	"github.com/gofrs/uuid"
 	"github.com/tecmise/connector-school-api/pkg/ports/output/constant"
 )
@@ -14,6 +15,7 @@ type Parameter struct {
 	Region     constant.AWSRegion
 	UserID     uuid.UUID
 	UserPoolID string
+	Headers    map[string]string
 }
 
 type ParameterBuilder struct {
@@ -50,6 +52,14 @@ func (b *ParameterBuilder) WithBody(body any) *ParameterBuilder {
 
 func (b *ParameterBuilder) WithRegion(region constant.AWSRegion) *ParameterBuilder {
 	b.param.Region = region
+	return b
+}
+
+func (b *ParameterBuilder) WithHeader(key, value string) *ParameterBuilder {
+	if b.param.Headers == nil {
+		b.param.Headers = make(map[string]string)
+	}
+	b.param.Headers[key] = value
 	return b
 }
 
