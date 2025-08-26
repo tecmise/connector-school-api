@@ -12,6 +12,7 @@ import (
 type (
 	Client interface {
 		FindByClusterId(ctx context.Context, clusterId int64) ([]int64, error)
+		Select(ctx context.Context) ([]Response, error)
 		PaginateSchools(ctx context.Context, search string, page int, limit int, sort string) (connector.ListResponse[Response], error)
 		CreateSchool(ctx context.Context, request any) (Response, error)
 		UpdateSchool(ctx context.Context, request any) (Response, error)
@@ -46,6 +47,16 @@ func (c client) FindByClusterId(_ context.Context, clusterId int64) ([]int64, er
 		WithMethod("GET").
 		Build()
 	return list, c.mapper.Ids(parameter, &list)
+}
+
+func (c client) Select(_ context.Context) ([]Response, error) {
+	var schools []Response
+	parameter := connector.NewParameterBuilder().
+		WithHost(c.host).
+		WithResource("api/schools/select").
+		WithMethod("GET").
+		Build()
+	return schools, c.mapper.List(parameter, &schools)
 }
 
 func (c client) PaginateSchools(_ context.Context, search string, page int, limit int, sort string) (connector.ListResponse[Response], error) {
