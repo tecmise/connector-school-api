@@ -37,7 +37,7 @@ func Lambda(identifier string) Client {
 	}
 }
 
-func (c client) PaginateStudents(_ context.Context, search string, page int, limit int, sort string) (connector.ListResponse[Response], error) {
+func (c client) PaginateStudents(ctx context.Context, search string, page int, limit int, sort string) (connector.ListResponse[Response], error) {
 	var list connector.ListResponse[Response]
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
