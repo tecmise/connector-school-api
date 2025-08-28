@@ -43,7 +43,7 @@ func (c client) PaginateClasses(ctx context.Context, search string, page int, li
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
 		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
-		WithHeader("x-api-key", fmt.Sprintf("Bearer %s", ctx.Value("x-api-key").(string))).
+		WithHeader("x-api-key", ctx.Value("x-api-key").(string)).
 		WithResource(fmt.Sprintf("api/classes?search=%s&page=%d&page=%d&page=%s", search, page, limit, sort)).
 		WithMethod("GET").
 		Build()
@@ -65,7 +65,7 @@ func (c client) CreateClass(ctx context.Context, request any) (Response, error) 
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
 		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
-		WithHeader("x-api-key", fmt.Sprintf("Bearer %s", ctx.Value("x-api-key").(string))).
+		WithHeader("x-api-key", ctx.Value("x-api-key").(string)).
 		WithResource("api/classes").
 		WithBody(request).
 		WithMethod("POST").
@@ -78,7 +78,7 @@ func (c client) UpdateClass(ctx context.Context, request any) (Response, error) 
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
 		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
-		WithHeader("x-api-key", fmt.Sprintf("Bearer %s", ctx.Value("x-api-key").(string))).
+		WithHeader("x-api-key", ctx.Value("x-api-key").(string)).
 		WithResource("api/classes").
 		WithBody(request).
 		WithMethod("PUT").
@@ -91,7 +91,7 @@ func (c client) InativeClass(ctx context.Context, classID string) (Response, err
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
 		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
-		WithHeader("x-api-key", fmt.Sprintf("Bearer %s", ctx.Value("x-api-key").(string))).
+		WithHeader("x-api-key", ctx.Value("x-api-key").(string)).
 		WithResource(fmt.Sprintf("api/classes/%s", classID)).
 		WithMethod("DELETE").
 		Build()

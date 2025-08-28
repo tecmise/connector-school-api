@@ -42,7 +42,7 @@ func (c client) PaginateStudents(ctx context.Context, search string, page int, l
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
 		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
-		WithHeader("x-api-key", fmt.Sprintf("Bearer %s", ctx.Value("x-api-key").(string))).
+		WithHeader("x-api-key", ctx.Value("x-api-key").(string)).
 		WithResource(fmt.Sprintf("api/students?search=%s&page=%d&page=%d&page=%s", search, page, limit, sort)).
 		WithMethod("GET").
 		Build()
@@ -55,7 +55,7 @@ func (c client) CreateStudent(ctx context.Context, request any) (Response, error
 		WithHost(c.host).
 		WithResource("api/students").
 		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
-		WithHeader("x-api-key", fmt.Sprintf("Bearer %s", ctx.Value("x-api-key").(string))).
+		WithHeader("x-api-key", ctx.Value("x-api-key").(string)).
 		WithBody(request).
 		WithMethod("POST").
 		WithHeader("Content-Type", "multipart/form-data").
@@ -68,7 +68,7 @@ func (c client) UpdateStudent(ctx context.Context, request any) (Response, error
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
 		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
-		WithHeader("x-api-key", fmt.Sprintf("Bearer %s", ctx.Value("x-api-key").(string))).
+		WithHeader("x-api-key", ctx.Value("x-api-key").(string)).
 		WithResource("api/students").
 		WithBody(request).
 		WithMethod("PUT").
@@ -82,7 +82,7 @@ func (c client) InativeStudent(ctx context.Context, studentID string) (Response,
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
 		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
-		WithHeader("x-api-key", fmt.Sprintf("Bearer %s", ctx.Value("x-api-key").(string))).
+		WithHeader("x-api-key", ctx.Value("x-api-key").(string)).
 		WithResource(fmt.Sprintf("api/students/%s", studentID)).
 		WithMethod("DELETE").
 		Build()

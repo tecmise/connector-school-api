@@ -38,7 +38,7 @@ func (c client) FindByUserId(ctx context.Context, cognitoUserId string) ([]Schoo
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
 		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
-		WithHeader("x-api-key", fmt.Sprintf("Bearer %s", ctx.Value("x-api-key").(string))).
+		WithHeader("x-api-key", ctx.Value("x-api-key").(string)).
 		WithResource(fmt.Sprintf("api/permissions/user/%s", cognitoUserId)).
 		WithMethod("GET").
 		WithRegion(constant.USEast1).
