@@ -33,10 +33,12 @@ func Lambda(functionName string) Client {
 	}
 }
 
-func (c client) FindByUserId(_ context.Context, cognitoUserId string) ([]SchoolTenantResponse, error) {
+func (c client) FindByUserId(ctx context.Context, cognitoUserId string) ([]SchoolTenantResponse, error) {
 	var list []SchoolTenantResponse
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
+		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
+		WithHeader("x-api-key", fmt.Sprintf("Bearer %s", ctx.Value("x-api-key").(string))).
 		WithResource(fmt.Sprintf("api/permissions/user/%s", cognitoUserId)).
 		WithMethod("GET").
 		WithRegion(constant.USEast1).

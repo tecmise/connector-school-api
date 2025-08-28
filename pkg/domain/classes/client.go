@@ -38,17 +38,19 @@ func Lambda(identifier string) Client {
 	}
 }
 
-func (c client) PaginateClasses(_ context.Context, search string, page int, limit int, sort string) (connector.ListResponse[Response], error) {
+func (c client) PaginateClasses(ctx context.Context, search string, page int, limit int, sort string) (connector.ListResponse[Response], error) {
 	var classes connector.ListResponse[Response]
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
+		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
+		WithHeader("x-api-key", fmt.Sprintf("Bearer %s", ctx.Value("x-api-key").(string))).
 		WithResource(fmt.Sprintf("api/classes?search=%s&page=%d&page=%d&page=%s", search, page, limit, sort)).
 		WithMethod("GET").
 		Build()
 	return classes, c.mapper.Page(parameter, &classes)
 }
 
-func (c client) FindBySchoolID(_ context.Context, schoolID string) ([]Response, error) {
+func (c client) FindBySchoolID(ctx context.Context, schoolID string) ([]Response, error) {
 	var classes []Response
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
@@ -58,10 +60,12 @@ func (c client) FindBySchoolID(_ context.Context, schoolID string) ([]Response, 
 	return classes, c.mapper.List(parameter, &classes)
 }
 
-func (c client) CreateClass(_ context.Context, request any) (Response, error) {
+func (c client) CreateClass(ctx context.Context, request any) (Response, error) {
 	var classes Response
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
+		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
+		WithHeader("x-api-key", fmt.Sprintf("Bearer %s", ctx.Value("x-api-key").(string))).
 		WithResource("api/classes").
 		WithBody(request).
 		WithMethod("POST").
@@ -69,10 +73,12 @@ func (c client) CreateClass(_ context.Context, request any) (Response, error) {
 	return classes, c.mapper.Create(parameter, &classes)
 }
 
-func (c client) UpdateClass(_ context.Context, request any) (Response, error) {
+func (c client) UpdateClass(ctx context.Context, request any) (Response, error) {
 	var classes Response
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
+		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
+		WithHeader("x-api-key", fmt.Sprintf("Bearer %s", ctx.Value("x-api-key").(string))).
 		WithResource("api/classes").
 		WithBody(request).
 		WithMethod("PUT").
@@ -80,10 +86,12 @@ func (c client) UpdateClass(_ context.Context, request any) (Response, error) {
 	return classes, c.mapper.Update(parameter, &classes)
 }
 
-func (c client) InativeClass(_ context.Context, classID string) (Response, error) {
+func (c client) InativeClass(ctx context.Context, classID string) (Response, error) {
 	var classes Response
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
+		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
+		WithHeader("x-api-key", fmt.Sprintf("Bearer %s", ctx.Value("x-api-key").(string))).
 		WithResource(fmt.Sprintf("api/classes/%s", classID)).
 		WithMethod("DELETE").
 		Build()

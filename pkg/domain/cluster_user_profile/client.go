@@ -34,10 +34,12 @@ func Lambda(functionName string) Client {
 	}
 }
 
-func (c client) FindByUserId(_ context.Context, cognitoUserId string) ([]Response, error) {
+func (c client) FindByUserId(ctx context.Context, cognitoUserId string) ([]Response, error) {
 	var list []Response
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
+		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
+		WithHeader("x-api-key", fmt.Sprintf("Bearer %s", ctx.Value("x-api-key").(string))).
 		WithResource(fmt.Sprintf("api/permissions/user/%s/clusters", cognitoUserId)).
 		WithMethod("GET").
 		WithRegion(constant.USEast1).
@@ -45,10 +47,12 @@ func (c client) FindByUserId(_ context.Context, cognitoUserId string) ([]Respons
 	return list, c.mapper.List(parameter, &list)
 }
 
-func (c client) FindSchoolsIdsByClusterId(_ context.Context, clusterId int64) ([]int64, error) {
+func (c client) FindSchoolsIdsByClusterId(ctx context.Context, clusterId int64) ([]int64, error) {
 	var list []int64
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
+		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
+		WithHeader("x-api-key", fmt.Sprintf("Bearer %s", ctx.Value("x-api-key").(string))).
 		WithResource(fmt.Sprintf("api/schools/cluster/%d/ids", clusterId)).
 		WithMethod("GET").
 		WithRegion(constant.USEast1).

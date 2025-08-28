@@ -2,6 +2,7 @@ package levels
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/tecmise/connector-school-api/pkg/adapters/outbound/lambda"
 	"github.com/tecmise/connector-school-api/pkg/adapters/outbound/rest"
@@ -33,10 +34,12 @@ func Lambda(identifier string) Client {
 	}
 }
 
-func (c client) Select(_ context.Context) ([]Response, error) {
+func (c client) Select(ctx context.Context) ([]Response, error) {
 	var response []Response
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
+		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
+		WithHeader("x-api-key", fmt.Sprintf("Bearer %s", ctx.Value("x-api-key").(string))).
 		WithResource("api/levels").
 		WithMethod("GET").
 		Build()
