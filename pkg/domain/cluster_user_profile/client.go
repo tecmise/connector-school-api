@@ -38,8 +38,7 @@ func (c client) FindByUserId(ctx context.Context, cognitoUserId string) ([]Respo
 	var list []Response
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
-		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
-		WithHeader("x-api-key", ctx.Value("x-api-key").(string)).
+		WithCredentials(ctx).
 		WithResource(fmt.Sprintf("api/permissions/user/%s/clusters", cognitoUserId)).
 		WithMethod("GET").
 		WithRegion(constant.USEast1).
@@ -51,8 +50,7 @@ func (c client) FindSchoolsIdsByClusterId(ctx context.Context, clusterId int64) 
 	var list []int64
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
-		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
-		WithHeader("x-api-key", ctx.Value("x-api-key").(string)).
+		WithCredentials(ctx).
 		WithResource(fmt.Sprintf("api/schools/cluster/%d/ids", clusterId)).
 		WithMethod("GET").
 		WithRegion(constant.USEast1).

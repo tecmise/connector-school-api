@@ -37,8 +37,7 @@ func (c client) FindRolesByProfileId(ctx context.Context, profileID int64) ([]st
 	var list []string
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
-		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
-		WithHeader("x-api-key", ctx.Value("x-api-key").(string)).
+		WithCredentials(ctx).
 		WithResource(fmt.Sprintf("api/roles/profile/%d", profileID)).
 		WithMethod("GET").
 		WithRegion(constant.USEast1).

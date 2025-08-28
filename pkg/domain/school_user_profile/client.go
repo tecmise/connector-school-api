@@ -37,8 +37,7 @@ func (c client) FindByUserId(ctx context.Context, cognitoUserId string) ([]Schoo
 	var list []SchoolTenantResponse
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
-		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
-		WithHeader("x-api-key", ctx.Value("x-api-key").(string)).
+		WithCredentials(ctx).
 		WithResource(fmt.Sprintf("api/permissions/user/%s", cognitoUserId)).
 		WithMethod("GET").
 		WithRegion(constant.USEast1).

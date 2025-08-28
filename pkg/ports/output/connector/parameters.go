@@ -1,7 +1,9 @@
 package connector
 
 import (
+	"context"
 	"fmt"
+	"github.com/sirupsen/logrus"
 
 	"github.com/gofrs/uuid"
 	"github.com/tecmise/connector-school-api/pkg/ports/output/constant"
@@ -60,6 +62,24 @@ func (b *ParameterBuilder) WithHeader(key, value string) *ParameterBuilder {
 		b.param.Headers = make(map[string]string)
 	}
 	b.param.Headers[key] = value
+	return b
+}
+
+func (b *ParameterBuilder) WithCredentials(ctx context.Context) *ParameterBuilder {
+	token := ctx.Value("bearer-token")
+	xApiKey := ctx.Value("x-api-key")
+	if token == nil {
+		logrus.Warnf("Token is null in context!")
+	}
+	if xApiKey == nil {
+		logrus.Warnf("X api key is null!")
+	}
+	if token != nil {
+		b.WithHeader("Authorization", fmt.Sprintf("Bearer %s", token.(string)))
+	}
+	if xApiKey != nil {
+		b.WithHeader("x-api-key", xApiKey.(string))
+	}
 	return b
 }
 

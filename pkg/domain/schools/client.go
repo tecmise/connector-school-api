@@ -43,8 +43,7 @@ func (c client) FindByClusterId(ctx context.Context, clusterId int64) ([]int64, 
 	var list []int64
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
-		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
-		WithHeader("x-api-key", ctx.Value("x-api-key").(string)).
+		WithCredentials(ctx).
 		WithResource(fmt.Sprintf("api/schools/cluster/%d/ids", clusterId)).
 		WithMethod("GET").
 		Build()
@@ -57,8 +56,7 @@ func (c client) Select(ctx context.Context) ([]Response, error) {
 		WithHost(c.host).
 		WithResource("api/schools/select").
 		WithMethod("GET").
-		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
-		WithHeader("x-api-key", ctx.Value("x-api-key").(string)).
+		WithCredentials(ctx).
 		Build()
 	return schools, c.mapper.List(parameter, &schools)
 }
@@ -69,8 +67,7 @@ func (c client) PaginateSchools(ctx context.Context, search string, page int, li
 		WithHost(c.host).
 		WithResource(fmt.Sprintf("api/schools?search=%s&page=%d&page=%d&page=%s", search, page, limit, sort)).
 		WithMethod("GET").
-		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
-		WithHeader("x-api-key", ctx.Value("x-api-key").(string)).
+		WithCredentials(ctx).
 		Build()
 	return list, c.mapper.Page(parameter, &list)
 }
@@ -81,8 +78,7 @@ func (c client) CreateSchool(ctx context.Context, request any) (Response, error)
 		WithHost(c.host).
 		WithResource("api/schools").
 		WithBody(request).
-		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
-		WithHeader("x-api-key", ctx.Value("x-api-key").(string)).
+		WithCredentials(ctx).
 		WithMethod("POST").
 		Build()
 	return school, c.mapper.Create(parameter, &school)
@@ -94,8 +90,7 @@ func (c client) UpdateSchool(ctx context.Context, request any) (Response, error)
 		WithHost(c.host).
 		WithResource("api/schools").
 		WithBody(request).
-		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
-		WithHeader("x-api-key", ctx.Value("x-api-key").(string)).
+		WithCredentials(ctx).
 		WithMethod("PUT").
 		Build()
 	return school, c.mapper.Update(parameter, &school)
@@ -105,8 +100,7 @@ func (c client) InativeSchool(ctx context.Context, schoolID string) (Response, e
 	var school Response
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
-		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
-		WithHeader("x-api-key", ctx.Value("x-api-key").(string)).
+		WithCredentials(ctx).
 		WithResource(fmt.Sprintf("api/schools/%s", schoolID)).
 		WithMethod("DELETE").
 		Build()

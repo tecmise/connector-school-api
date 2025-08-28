@@ -42,8 +42,7 @@ func (c client) PaginateClasses(ctx context.Context, search string, page int, li
 	var classes connector.ListResponse[Response]
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
-		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
-		WithHeader("x-api-key", ctx.Value("x-api-key").(string)).
+		WithCredentials(ctx).
 		WithResource(fmt.Sprintf("api/classes?search=%s&page=%d&page=%d&page=%s", search, page, limit, sort)).
 		WithMethod("GET").
 		Build()
@@ -64,8 +63,7 @@ func (c client) CreateClass(ctx context.Context, request any) (Response, error) 
 	var classes Response
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
-		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
-		WithHeader("x-api-key", ctx.Value("x-api-key").(string)).
+		WithCredentials(ctx).
 		WithResource("api/classes").
 		WithBody(request).
 		WithMethod("POST").
@@ -77,8 +75,7 @@ func (c client) UpdateClass(ctx context.Context, request any) (Response, error) 
 	var classes Response
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
-		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
-		WithHeader("x-api-key", ctx.Value("x-api-key").(string)).
+		WithCredentials(ctx).
 		WithResource("api/classes").
 		WithBody(request).
 		WithMethod("PUT").
@@ -90,8 +87,7 @@ func (c client) InativeClass(ctx context.Context, classID string) (Response, err
 	var classes Response
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
-		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
-		WithHeader("x-api-key", ctx.Value("x-api-key").(string)).
+		WithCredentials(ctx).
 		WithResource(fmt.Sprintf("api/classes/%s", classID)).
 		WithMethod("DELETE").
 		Build()
