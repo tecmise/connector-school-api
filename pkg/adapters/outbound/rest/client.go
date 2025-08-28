@@ -75,6 +75,9 @@ func call(parameter connector.Parameter, response interface{}) error {
 	req.Header.SetMethod(method)
 	req.Header.Set("Accept", "application/json")
 
+	req.Header.Set("Authorization", parameter.Headers["Authorization"])
+	req.Header.Set("x-api-key", parameter.Headers["x-api-key"])
+
 	isFormData := false
 
 	if v, ok := parameter.Headers["Content-Type"]; ok {

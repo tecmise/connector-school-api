@@ -40,7 +40,7 @@ func (c client) FindUserInfo(ctx context.Context, userID string) (Response, erro
 		WithHost(c.host).
 		WithResource(fmt.Sprintf("api/users/%s", userID)).
 		WithHeader("Authorization", fmt.Sprintf("Bearer %s", ctx.Value("bearer-token").(string))).
-		WithHeader("x-api-key", fmt.Sprintf("Bearer %s", ctx.Value("x-api-key").(string))).
+		WithHeader("x-api-key", ctx.Value("x-api-key").(string)).
 		WithMethod("GET").
 		Build()
 	return user, c.mapper.Find(parameter, &user)
