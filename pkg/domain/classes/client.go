@@ -52,6 +52,7 @@ func (c client) FindBySchoolID(ctx context.Context, schoolID string) ([]Response
 	var classes []Response
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
+		WithCredentials(ctx).
 		WithResource(fmt.Sprintf("api/classes/select/school/%s", schoolID)).
 		WithMethod("GET").
 		Build()

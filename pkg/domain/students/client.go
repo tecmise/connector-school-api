@@ -3,6 +3,7 @@ package students
 import (
 	"context"
 	"fmt"
+	"github.com/sirupsen/logrus"
 
 	"github.com/tecmise/connector-lib/pkg/adapters/outbound/lambda"
 	"github.com/tecmise/connector-lib/pkg/adapters/outbound/rest"
@@ -49,6 +50,7 @@ func (c client) PaginateStudents(ctx context.Context, search string, page int, l
 }
 
 func (c client) CreateStudent(ctx context.Context, request any) (Response, error) {
+	logrus.Debug("CreateStudent")
 	var students Response
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
@@ -62,6 +64,7 @@ func (c client) CreateStudent(ctx context.Context, request any) (Response, error
 }
 
 func (c client) UpdateStudent(ctx context.Context, request any) (Response, error) {
+	logrus.Debug("CreateStudent")
 	var students Response
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
