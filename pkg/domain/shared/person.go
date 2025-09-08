@@ -9,8 +9,7 @@ type PersonDTO struct {
 	ShieldID    *string   `json:"shield_id"`
 	Email       *string   `json:"email"`
 	Document    string    `json:"document"`
-	FirstName   string    `json:"first_name"`
-	LastName    string    `json:"last_name"`
+	FullName    string    `json:"full_name"`
 	BirthDate   time.Time `json:"birth_date"`
 	Gender      string    `json:"gender"`
 	PhoneNumber *string   `json:"phone_number"`
