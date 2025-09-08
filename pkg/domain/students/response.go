@@ -13,6 +13,7 @@ type Response struct {
 	NameOfResponsible     string                            `json:"name_of_responsible"`
 	DocumentOfResponsible string                            `json:"document_of_responsible"`
 	EmailOfResponsible    string                            `json:"email_of_responsible"`
+	PhoneOfResponsible    string                            `json:"phone_of_responsible"`
 	ClassID               uint                              `json:"class_id"`
 	Class                 classes.Response                  `json:"class"`
 	StudentFamilyMembers  []shared.StudentFamilyMembersDTO  `json:"student_family_members"`
