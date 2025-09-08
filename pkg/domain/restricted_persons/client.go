@@ -5,9 +5,10 @@ import (
 	"fmt"
 
 	"github.com/sirupsen/logrus"
-	"github.com/tecmise/connector-school-api/pkg/adapters/outbound/lambda"
-	"github.com/tecmise/connector-school-api/pkg/adapters/outbound/rest"
-	"github.com/tecmise/connector-school-api/pkg/ports/output/connector"
+
+	"github.com/tecmise/connector-lib/pkg/adapters/outbound/lambda"
+	"github.com/tecmise/connector-lib/pkg/adapters/outbound/rest"
+	"github.com/tecmise/connector-lib/pkg/ports/output/connector"
 )
 
 type (
