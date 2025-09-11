@@ -7,7 +7,7 @@ type StudentSchoolDTO struct {
 	School             SchoolSimpleDTO `json:"school"`
 	RegistrationNumber string          `json:"registration_number"`
 	Status             string          `json:"status"` // 'enrolled', 'graduated', 'finished'
-	Year               string          `json:"year"`
+	Year               int             `json:"year"`
 	StartDate          string          `json:"start_date"`
 	EndDate            *string         `json:"end_date"`
 
