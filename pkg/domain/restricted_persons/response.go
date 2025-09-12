@@ -6,9 +6,13 @@ import (
 )
 
 type Response struct {
-	ID          int                `json:"id"`
-	PersonID    int                `json:"person_id"`
-	Person      shared.PersonDTO   `json:"person"`
+	ID          uint               `json:"id"`
+	FullName    string             `json:"full_name"`
+	Gender      string             `json:"gender"`
+	ImageID     uint               `json:"image_id"`
+	Image       shared.ImageDTO    `json:"image"`
+	DocumentID  *uint              `json:"document_id"`
+	Document    shared.DocumentDTO `json:"document"`
 	Description string             `json:"description"`
 	IsActive    bool               `json:"is_active"`
 	Schools     []schools.Response `json:"schools"`
