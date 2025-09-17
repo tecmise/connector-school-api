@@ -7,6 +7,7 @@ type Response struct {
 	Name      string            `json:"name"`
 	Type      string            `json:"type"`
 	Document  string            `json:"document"`
+	CodeINEP  string            `json:"code_inep"`
 	Phone     string            `json:"phone"`
 	Email     string            `json:"email"`
 	AddressID uint              `json:"address_id"`
