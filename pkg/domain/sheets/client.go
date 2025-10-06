@@ -68,6 +68,7 @@ func (c client) Create(ctx context.Context, request any) (Response, error) {
 		WithBody(request).
 		WithCredentials(ctx).
 		WithMethod("POST").
+		WithHeader("Content-Type", "multipart/form-data").
 		Build()
 	return sheet, c.mapper.Create(parameter, &sheet)
 }
