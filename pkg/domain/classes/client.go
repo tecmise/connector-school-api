@@ -42,7 +42,7 @@ func (c client) PaginateClasses(ctx context.Context, search string, page int, li
 	parameter := connector.NewParameterBuilder().
 		WithHost(c.host).
 		WithCredentials(ctx).
-		WithResource(fmt.Sprintf("api/classes?search=%s&page=%d&page=%d&page=%s", search, page, limit, sort)).
+		WithResource(fmt.Sprintf("api/classes?search=%s&page=%d&limit=%d&sort=%s", search, page, limit, sort)).
 		WithMethod("GET").
 		Build()
 	return classes, c.mapper.Page(parameter, &classes)
