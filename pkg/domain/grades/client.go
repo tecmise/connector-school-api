@@ -2,8 +2,8 @@ package grades
 
 import (
 	"context"
-	"github.com/tecmise/connector-lib/pkg/adapters/outbound/lambda"
-	"github.com/tecmise/connector-lib/pkg/adapters/outbound/rest"
+	lambda "github.com/tecmise/connector-lib/pkg/adapters/outbound/client_lambda_proxy"
+	rest "github.com/tecmise/connector-lib/pkg/adapters/outbound/client_rest"
 	"github.com/tecmise/connector-lib/pkg/ports/output/connector"
 )
 
